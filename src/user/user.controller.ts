@@ -5,22 +5,23 @@ import { UpdateUserDto } from "./dto/updateUser.dto";
 import { UserEntity } from "./user.entity";
 import { ValidationPipe } from "./pipes/validation.pipe";
 import { UserService } from "./user.service";
+import { UserResponseDto } from "./dto/userResponse.dto";
 
 @Controller('user')
 export class UserController{
     constructor(private readonly userService:UserService){}
     @Get()
-    find(  ):UserEntity[]{
+    find(  ):UserResponseDto[]{
         return this.userService.find();
     }
     @Get(":username")
-    findOne(@Param("username") username:string):UserEntity{
+    findOne(@Param("username") username:string):UserResponseDto{
               
         return this.userService.findOne(username);
     }
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    createUser(@Body() userData:CreateUserDto){
+    createUser(@Body() userData:CreateUserDto):UserResponseDto{
         
         return this.userService.create(userData);
     }

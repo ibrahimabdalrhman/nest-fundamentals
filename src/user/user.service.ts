@@ -8,15 +8,14 @@ import { UserResponseDto } from "./dto/userResponse.dto";
 export class UserService{
     private readonly users:UserEntity[]=[];
 
-    find():UserEntity[]{
-        return this.users;
-
+    find():UserResponseDto[]{
+        return this.users.map(user => new UserResponseDto(user));
     }
-    findOne(username:string):UserEntity{
+    findOne(username:string):UserResponseDto{
         const user= this.users.find(
             (user)=>user.username===username
         );        
-        return user;
+        return new UserResponseDto(user);
     }
 
     create(userData:CreateUserDto):UserResponseDto{
