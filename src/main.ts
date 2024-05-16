@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { WrapDataInterceptor } from './common/interceptors/wrap-data/wrap-data.interceptor';
 import { TimeoutInterceptor } from './common/interceptors/timeout/timeout.interceptor';
+import { CustomExceptionFilter } from './common/filters/custom-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,7 +13,8 @@ async function bootstrap() {
     transformOptions: { enableImplicitConversion: true }
 
   }));
-  app.useGlobalInterceptors(new WrapDataInterceptor(),new TimeoutInterceptor());
+  // app.useGlobalInterceptors(new WrapDataInterceptor(),new TimeoutInterceptor());
+  app.useGlobalFilters(new CustomExceptionFilter());
   await app.listen(3000);
 }
 bootstrap();
