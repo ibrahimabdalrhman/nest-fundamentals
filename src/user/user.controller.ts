@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, SetMetadata, UseGuards } from "@nestjs/common";
 import { STATUS_CODES } from "http";
 import { CreateUserDto } from "./dto/createUser.dto";
 import { UpdateUserDto } from "./dto/updateUser.dto";
@@ -11,6 +11,7 @@ import { AuthGuard } from "src/common/guards/auth/auth.guard";
 @Controller('user')
 export class UserController{
     constructor(private readonly userService:UserService){}
+    @SetMetadata("Is_Public",true)
     @Get()
     find(  ):UserResponseDto[]{
         return this.userService.find();
@@ -20,7 +21,6 @@ export class UserController{
               
         return this.userService.findOne(username);
     }
-    @UseGuards(AuthGuard)
     @Post()
     @HttpCode(HttpStatus.CREATED)
     createUser(@Body() userData:CreateUserDto):UserResponseDto{
