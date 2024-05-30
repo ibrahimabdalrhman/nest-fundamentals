@@ -7,11 +7,13 @@ import { ValidationPipe } from "./pipes/validation.pipe";
 import { UserService } from "./user.service";
 import { UserResponseDto } from "./dto/userResponse.dto";
 import { AuthGuard } from "src/common/guards/auth/auth.guard";
+import { Public } from "src/common/decorators/public.decorator";
 
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) { }
-    @SetMetadata('IS_Public',true)
+    // @SetMetadata('Is_Public', true)
+    @Public()
     @Get()
     find(): UserResponseDto[] {
         return this.userService.find();
@@ -24,16 +26,14 @@ export class UserController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     createUser(@Body() userData: CreateUserDto): UserResponseDto {
-
         return this.userService.create(userData);
     }
     @Patch(":username")
     update(@Body() userData: UpdateUserDto, @Param("username") username: string) {
-
         return this.userService.update(username, userData);
     }
     @Delete(":username")
     delete(@Param("username") username: string) {
-        return this.userService.delete(username)
+        return this.userService.delete(username);
     }
 }
