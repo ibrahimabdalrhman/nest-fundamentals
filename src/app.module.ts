@@ -5,7 +5,16 @@ import { CommonModule } from './common/common.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot(),UserModule, CommonModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath:
+        process.env.NODE_ENV === 'development'
+          ? '.development.env'
+          : '.staging.env',
+    }),
+    UserModule,
+    CommonModule,
+  ],
   providers: [
     { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
   ],

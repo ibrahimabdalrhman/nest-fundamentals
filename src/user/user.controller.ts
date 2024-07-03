@@ -12,8 +12,8 @@ import { Public } from "src/common/decorators/public.decorator";
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {
-        console.log(process.env.DB_USER);
-        
+        console.log(process.env.DB_USERNAME);
+        console.log(process.env.NODE_ENV);        
      }
     // @SetMetadata('Is_Public', true)
     @Public()
