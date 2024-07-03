@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, SetMetadata, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Logger, Param, Patch, Post, Query, SetMetadata, UseGuards } from "@nestjs/common";
 import { STATUS_CODES } from "http";
 import { CreateUserDto } from "./dto/createUser.dto";
 import { UpdateUserDto } from "./dto/updateUser.dto";
@@ -11,15 +11,16 @@ import { Public } from "src/common/decorators/public.decorator";
 
 @Controller('user')
 export class UserController {
+    logger:Logger=new Logger(UserController.name);
     constructor(private readonly userService: UserService) {
         console.log(process.env.DB_USERNAME);
-        console.log(process.env.LINE);
         console.log(process.env.NODE_ENV);        
      }
     // @SetMetadata('Is_Public', true)
     @Public()
     @Get()
     find(): UserResponseDto[] {
+        this.logger.debug("geting all users");
         return this.userService.find();
     }
     @Get(":username")
