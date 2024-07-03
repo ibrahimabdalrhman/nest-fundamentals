@@ -11,7 +11,10 @@ import { ConfigModule } from '@nestjs/config';
         process.env.NODE_ENV === 'development'
           ? '.development.env'
           : '.staging.env',
+      isGlobal: true,
+      expandVariables: true,
     }),
+
     UserModule,
     CommonModule,
   ],
